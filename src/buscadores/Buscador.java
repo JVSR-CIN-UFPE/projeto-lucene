@@ -1,4 +1,4 @@
-package opa;
+package buscadores;
 
 import java.io.File;
 
