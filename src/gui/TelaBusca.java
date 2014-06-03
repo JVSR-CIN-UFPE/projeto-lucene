@@ -1,15 +1,28 @@
 package gui;
 
-import javax.swing.JOptionPane;
+import java.util.Scanner;
 
-import buscadores.Buscador;
+import negocio.Fachada;
 
 public class TelaBusca {
 	
-	public static void main(String[] args) {
-		Buscador b = new Buscador();
-		String parametro = JOptionPane.showInputDialog("Consulta");
-		b.buscaComParser(parametro);
+	private Fachada fachada;
+	private Scanner console;
+	
+	public TelaBusca() {
+		this.fachada = Fachada.getInstance();
+		this.console = new Scanner(System.in);
+		
+		System.out.println("Faca sua consulta:");
+		String parametro = this.console.nextLine();
+		
+		// Utilizar telas!
+//		parametro = JOptionPane.showInputDialog("Faça sua consulta!!!");
+		
+		System.out.println();
+		
+		fachada.buscar(parametro);
+		
 	}
 	
 }

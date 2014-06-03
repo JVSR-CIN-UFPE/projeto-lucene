@@ -1,38 +1,30 @@
 package gui;
 
-import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.util.Scanner;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-
-import negocio.Fachada;
 
 public class TelaPrincipal extends JFrame {
 	
-	private Fachada fachada;
+	private static final long serialVersionUID = 1838317687279883502L;
+	
 	private Scanner console;
 	
-//	private JLabel label1, label2, label3, label4 = new JLabel("Rótulo 4", JLabel.CENTER);
-	
 	public TelaPrincipal() {
+		
+		this.console = new Scanner(System.in);
 		
 		/*--------------------------------------------------------------------------------
 		
 		Container pane = this.getContentPane();
 		pane.setLayout(new GridLayout(4, 1));
 		
+		ImageIcon img = new ImageIcon("resources/Crystal_java.png");
+		
 		JLabel label1 = new JLabel("Testando rótulos com JAVA");
 		JLabel label2 = new JLabel("Texto Centralizado", JLabel.CENTER);
-		ImageIcon img = new ImageIcon("resources/Crystal_java.png");
 		JLabel label3 = new JLabel("JAVA - Interface Gráfica", img, JLabel.RIGHT);
+		JLabel label4 = new JLabel("Rótulo 4", JLabel.CENTER);
 		
 		JPanel painel = new JPanel(new GridLayout(4,1));
 		
@@ -67,7 +59,7 @@ public class TelaPrincipal extends JFrame {
 		pane.add(texto2);
 		pane.add(texto3);
 		
-		/*--------------------------------------------------------------------------------*/
+		/*--------------------------------------------------------------------------------
 		
 		Container pane = this.getContentPane();
 		pane.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -75,23 +67,30 @@ public class TelaPrincipal extends JFrame {
 		JTextArea area1 = new JTextArea();
 		JTextArea area2 = new JTextArea();
 		
-		/*--------------------------------------------------------------------------------*/
+		/*--------------------------------------------------------------------------------
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(360,150);
 		this.setVisible(true);
 		
-//		this.fachada = Fachada.getInstance();
-//		console = new Scanner(System.in);
-//		
-//		System.out.println("Indexar?");
-//		
-//		String go = console.next();
-//		
-//		if(go != null)
-//		{
-//			fachada.indexarDocumentos();
-//		}
+		/*--------------------------------------------------------------------------------*/
+		
+		while(true) {
+			System.out.println("Escolha a opcao:\n" + "1. Indexar\n" + "2. Buscar");
+			
+			int opcao = console.nextInt();
+			
+			// ACTION 1 => INDEXER
+			if(opcao == 1) {
+				new TelaIndexar();
+			}
+			// ACTION 2 => SEARCHER
+			else if(opcao == 2) {
+				new TelaBusca();
+			}
+			
+			System.out.println();
+		}
 		
 	}
 	
