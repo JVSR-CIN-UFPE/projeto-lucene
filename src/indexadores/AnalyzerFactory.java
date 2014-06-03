@@ -1,24 +1,33 @@
 package indexadores;
 
-import java.io.Reader;
+import java.util.Vector;
 
 import org.apache.lucene.analysis.br.*;
+import org.apache.lucene.analysis.util.CharArraySet;
 import org.apache.lucene.util.Version;
 
-public class MyAnalaiser {
+public class AnalyzerFactory {
 	
-	BrazilianAnalyzer bra;
+	private AnalyzerFactory() {}
 	
-	public MyAnalaiser() {
-		// TODO Auto-generated constructor stub
-		bra = new BrazilianAnalyzer(Version.LUCENE_48);
-		
-		System.out.println(bra.getDefaultStopSet());
-		
-	}
-	
-	
-	public static void main(String[] args) {
-		new MyAnalaiser();
+	public static BrazilianAnalyzer getAnalyzer(boolean stopWords, boolean stemming) {
+		if(stemming) {
+			if(stopWords) {
+				return new BrazilianAnalyzer(Version.LUCENE_48);
+			}
+			else {
+				return new BrazilianAnalyzer(Version.LUCENE_48, null);
+			}
+		}
+		else {
+			CharArraySet set = new CharArraySet(Version.LUCENE_48, new Vector<>(), true);
+			
+			if(stopWords) {
+				return new BrazilianAnalyzer(Version.LUCENE_48, BrazilianAnalyzer.getDefaultStopSet(), set);
+			}
+			else {
+				return new BrazilianAnalyzer(Version.LUCENE_48, null, set);
+			}
+		}
 	}
 }

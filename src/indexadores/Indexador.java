@@ -20,16 +20,12 @@ import org.apache.tika.Tika;
 public class Indexador {
 
 	private String diretorioDosIndices = "indice-lucene";
-	//    private String diretorioDosIndices = System.getProperty("user.home") + "/indice-lucene";
 
-	//    private String diretorioParaIndexar = "filesToIndex";
-	private String diretorioParaIndexar = System.getProperty("user.home") + "/Dropbox/Public/Algebra/";
-	//    private String diretorioParaIndexar = System.getProperty("user.home") + "/Downloads";
+	private String diretorioParaIndexar = "filesToIndex";
+	//	private String diretorioParaIndexar = System.getProperty("user.home") + "/Dropbox/Public/Algebra/";
 
-	// {3}
 	private IndexWriter writer;
 
-	// {4}
 	private Tika tika;
 
 	public static void main(String[] args) {
@@ -42,24 +38,19 @@ public class Indexador {
 			File diretorio = new File(diretorioDosIndices);
 			apagaIndices(diretorio);
 
-			// {5}
 			Directory d = new SimpleFSDirectory(diretorio);
 			System.out.println("Diretorio do indice: " + diretorioDosIndices);
 
-			// {6}
 			Analyzer analyzer = new BrazilianAnalyzer(Version.LUCENE_48);
 
-			// {7}
 			IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_48, analyzer);
 
-			// {8}
 			writer = new IndexWriter(d, config);
 
 			long inicio = System.currentTimeMillis();
 
 			indexaArquivosDoDiretorio(new File(diretorioParaIndexar));
 
-			// {12}
 			writer.commit();
 			writer.close();
 			long fim = System.currentTimeMillis();
@@ -92,6 +83,7 @@ public class Indexador {
 						|| nome.toLowerCase().endsWith(".xls")
 						|| nome.toLowerCase().endsWith(".txt")
 						|| nome.toLowerCase().endsWith(".rtf")
+						|| nome.toLowerCase().endsWith(".html")
 						|| arquivo.isDirectory()) {
 					return true;
 				}
@@ -129,10 +121,10 @@ public class Indexador {
 		String ultimaModificacao = formatador.format(arquivo.lastModified());
 
 		/*	
-			Monta um Document para indexação
-			Field.Store.YES: armazena uma cópia do texto no índice, aumentando muito o seu tamanho;
-			Field.Index.ANALYZED: utilizado quando o campo é de texto livre;
-			Field.Index.NOT_ANALYZED: utilizado quando o campo é um ID, data ou númerico.
+			Monta um Document para indexacao
+			Field.Store.YES: armazena uma copia do texto no indice, aumentando muito o seu tamanho;
+			Field.Index.ANALYZED: utilizado quando o campo eh de texto livre;
+			Field.Index.NOT_ANALYZED: utilizado quando o campo eh um ID, data ou numerico.
 		 */
 
 		Document documento = new Document();
@@ -142,7 +134,7 @@ public class Indexador {
 				Store.YES));
 		documento.add(new TextField("Texto", textoExtraido, Store.YES));
 		try {
-			// Adiciona o Document no índice, mas este só estará disponível para consulta após o commit.
+			// Adiciona o Document no indice, mas este so estara disponivel para consulta apos o commit.
 			getWriter().addDocument(documento);
 		} catch (IOException e) {
 			System.out.println(e.getMessage());

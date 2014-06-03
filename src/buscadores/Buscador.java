@@ -21,33 +21,28 @@ import org.apache.lucene.util.Version;
 public class Buscador {
 	
 	private String diretorioDoIndice = "indice-lucene";
-//	private String diretorioDoIndice = System.getProperty("user.home") + "/indice-lucene";
 
-	public void buscaComParser(String parametro) {
+	public void buscaComParser(String consulta) {
 		try {
 			Directory diretorio = new SimpleFSDirectory(new File(diretorioDoIndice));
 			
-			// {1}
 			IndexReader leitor = DirectoryReader.open(diretorio);
 			
-			// {2}
 			IndexSearcher buscador = new IndexSearcher(leitor);
 			Analyzer analisador = new BrazilianAnalyzer(Version.LUCENE_48);
 			
-			// {3}
 			QueryParser parser = new QueryParser(Version.LUCENE_48, "Texto", analisador);
-			Query consulta = parser.parse(parametro);
+			Query query = parser.parse(consulta);
 			
-			long inicio = System.currentTimeMillis();
+//			long inicio = System.currentTimeMillis();
 			
-			// {4}
-			TopDocs resultado = buscador.search(consulta, 100);
-			long fim = System.currentTimeMillis();
+			TopDocs resultado = buscador.search(query, 10);
+			
+//			long fim = System.currentTimeMillis();
 			int totalDeOcorrencias = resultado.totalHits;
 			System.out.println("Total de documentos encontrados:" + totalDeOcorrencias);
-			System.out.println("Tempo total para busca: " + (fim - inicio) + "ms\n");
+//			System.out.println("Tempo total para busca: " + (fim - inicio) + "ms\n");
 			
-			// {5}
 			for (ScoreDoc sd : resultado.scoreDocs) {
 				Document documento = buscador.doc(sd.doc);
 				System.out.println("Caminho:" + documento.get("Caminho"));
@@ -55,7 +50,9 @@ public class Buscador {
 				System.out.println("Score:" + sd.score);
 				System.out.println("--------");
 			}
+			
 			leitor.close();
+			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
