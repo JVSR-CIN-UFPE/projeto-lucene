@@ -51,10 +51,7 @@ public class Buscador {
 			
 			for (ScoreDoc sd : resultado.scoreDocs) {
 				Document documento = buscador.doc(sd.doc);
-				System.out.println("Caminho:" + documento.get("Caminho"));
-				System.out.println("Ultima modificacao:"+ documento.get("UltimaModificacao"));
-				System.out.println("Score:" + sd.score);
-				System.out.println("--------");
+				System.out.println("Score:" + sd.score + "\t" + "Caminho:" + documento.get("Caminho"));
 			}
 			
 			leitor.close();
