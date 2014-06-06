@@ -1,8 +1,9 @@
 package negocio;
 
-import java.util.Vector;
-
+import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.br.*;
+import org.apache.lucene.analysis.pt.PortugueseAnalyzer;
+import org.apache.lucene.analysis.snowball.SnowballAnalyzer;
 import org.apache.lucene.analysis.util.CharArraySet;
 import org.apache.lucene.util.Version;
 
@@ -16,17 +17,27 @@ public class AnalyzerFactory {
 				return new BrazilianAnalyzer(Version.LUCENE_48);
 			}
 			else {
-				return new BrazilianAnalyzer(Version.LUCENE_48, null);
+				Analyzer a = new SnowballAnalyzer(Version.LUCENE_48, "Portuguese");
+				
+				if(a instanceof BrazilianAnalyzer) {
+					System.out.println("IsTrue");
+				}
+				else if(a instanceof PortugueseAnalyzer) {
+					System.out.println("IsTrue2");
+				}
+				else {
+					System.out.println("Fudeu");
+				}
+				
+				return new BrazilianAnalyzer(Version.LUCENE_48, CharArraySet.EMPTY_SET);
 			}
 		}
 		else {
-			CharArraySet set = new CharArraySet(Version.LUCENE_48, new Vector<>(), true);
-			
 			if(stopwords) {
-				return new BrazilianAnalyzer(Version.LUCENE_48, BrazilianAnalyzer.getDefaultStopSet(), set);
+				return new BrazilianAnalyzer(Version.LUCENE_48, BrazilianAnalyzer.getDefaultStopSet(), CharArraySet.EMPTY_SET);
 			}
 			else {
-				return new BrazilianAnalyzer(Version.LUCENE_48, null, set);
+				return new BrazilianAnalyzer(Version.LUCENE_48, CharArraySet.EMPTY_SET, CharArraySet.EMPTY_SET);
 			}
 		}
 	}

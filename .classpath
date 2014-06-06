@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="lib/lucene-queries-4.8.0.jar"/>
 	<classpathentry kind="lib" path="lib/lucene-queryparser-4.8.0.jar"/>
 	<classpathentry kind="lib" path="lib/tika-app-1.5.jar"/>
+	<classpathentry kind="lib" path="lib/SnowballStemmer.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

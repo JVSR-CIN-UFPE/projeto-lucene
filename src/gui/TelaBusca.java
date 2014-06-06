@@ -2,27 +2,33 @@ package gui;
 
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 import negocio.Fachada;
 
 public class TelaBusca {
 	
 	private Fachada fachada;
-	private Scanner console;
 	
 	public TelaBusca() {
 		this.fachada = Fachada.getInstance();
-		this.console = new Scanner(System.in);
-		
-		System.out.println("Faca sua consulta:");
-		String parametro = this.console.nextLine();
 		
 		// Utilizar telas!
-//		parametro = JOptionPane.showInputDialog("Faça sua consulta!!!");
-		
-		System.out.println();
+		String parametro = JOptionPane.showInputDialog("Faï¿½a sua consulta!!!");
 		
 		fachada.buscar(parametro);
 		
+	}
+	
+	public static void console() {
+		Fachada fachada = Fachada.getInstance();
+		Scanner console = new Scanner(System.in);
+		
+		System.out.println("Faca sua consulta:");
+		String parametro = console.nextLine();
+		System.out.println();
+		
+		fachada.buscar(parametro);
 	}
 	
 }

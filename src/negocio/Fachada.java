@@ -9,22 +9,27 @@ public class Fachada {
 	
 	private static Fachada singleton;
 	
+	private Configurador configurador;
 	private Indexador indexador;
 	private Buscador buscador;
 	private Analyzer analyzer;
 	
 	private Fachada() {
-		this.analyzer = AnalyzerFactory.getAnalyzer(true, true);
+		this.configurador = Configurador.getInstance();
+		this.analyzer = AnalyzerFactory.getAnalyzer(Configurador.STOPWORDS, Configurador.STEMMING);
 		this.indexador = new Indexador(analyzer);
 		this.buscador = new Buscador(analyzer);
 	}
 	
 	public static Fachada getInstance() {
-		singleton = new Fachada();
+		if(singleton == null)
+			singleton = new Fachada();
 		return singleton;
 	}
 	
 	public void configureAnalyzer(boolean stopwords, boolean stemming) {
+		Configurador.STOPWORDS = stopwords;
+		Configurador.STEMMING  = stemming;
 		Analyzer analyzer = AnalyzerFactory.getAnalyzer(stopwords, stemming);
 		this.indexador.setAnalyzer(analyzer);
 		this.buscador.setAnalyzer(analyzer);
@@ -37,5 +42,8 @@ public class Fachada {
 	public void buscar(String parametro) {
 		this.buscador.buscaComParser(parametro);
 	}
-	
+
+	public void finalizar() {
+		configurador.finalizar();
+	}
 }

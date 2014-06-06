@@ -4,15 +4,13 @@ import java.util.Scanner;
 
 import javax.swing.JFrame;
 
+import negocio.Fachada;
+
 public class TelaPrincipal extends JFrame {
 	
 	private static final long serialVersionUID = 1838317687279883502L;
 	
-	private Scanner console;
-	
 	public TelaPrincipal() {
-		
-		this.console = new Scanner(System.in);
 		
 		/*--------------------------------------------------------------------------------
 		
@@ -21,10 +19,10 @@ public class TelaPrincipal extends JFrame {
 		
 		ImageIcon img = new ImageIcon("resources/Crystal_java.png");
 		
-		JLabel label1 = new JLabel("Testando rótulos com JAVA");
+		JLabel label1 = new JLabel("Testando rï¿½tulos com JAVA");
 		JLabel label2 = new JLabel("Texto Centralizado", JLabel.CENTER);
-		JLabel label3 = new JLabel("JAVA - Interface Gráfica", img, JLabel.RIGHT);
-		JLabel label4 = new JLabel("Rótulo 4", JLabel.CENTER);
+		JLabel label3 = new JLabel("JAVA - Interface Grï¿½fica", img, JLabel.RIGHT);
+		JLabel label4 = new JLabel("Rï¿½tulo 4", JLabel.CENTER);
 		
 		JPanel painel = new JPanel(new GridLayout(4,1));
 		
@@ -75,23 +73,35 @@ public class TelaPrincipal extends JFrame {
 		
 		/*--------------------------------------------------------------------------------*/
 		
-		while(true) {
-			System.out.println("Escolha a opcao:\n" + "1. Indexar\n" + "2. Buscar");
+		
+		
+	}
+
+	public static void console() {
+		Fachada fachada = Fachada.getInstance();
+		Scanner console = new Scanner(System.in);
+		boolean stop = false;
+		
+		while(!stop) {
+			System.out.println("Escolha a opcao:\n" + "1. Indexar\n" + "2. Buscar\n" + "3. Encerrar");
 			
 			int opcao = console.nextInt();
 			
 			// ACTION 1 => INDEXER
 			if(opcao == 1) {
-				new TelaIndexar();
+				TelaIndexar.console();
 			}
 			// ACTION 2 => SEARCHER
 			else if(opcao == 2) {
-				new TelaBusca();
+				TelaBusca.console();
+			}
+			else if(opcao == 3) {
+				stop = false;
+				fachada.finalizar();
 			}
 			
 			System.out.println();
 		}
-		
 	}
 	
 }
