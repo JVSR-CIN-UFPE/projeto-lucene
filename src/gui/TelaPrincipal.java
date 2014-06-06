@@ -96,7 +96,7 @@ public class TelaPrincipal extends JFrame {
 				TelaBusca.console();
 			}
 			else if(opcao == 3) {
-				stop = false;
+				stop = true;
 				fachada.finalizar();
 			}
 			
